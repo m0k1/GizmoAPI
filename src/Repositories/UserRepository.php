@@ -1,4 +1,5 @@
-<?php namespace Pisa\GizmoAPI\Repositories;
+<?php
+namespace Pisa\GizmoAPI\Repositories;
 
 use Exception;
 use Pisa\GizmoAPI\GizmoClient as Client;
@@ -42,7 +43,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         // Gather filtering info to options
         $filter  = $this->criteriaToFilter($criteria, $caseSensitive);
         $options = ['$filter' => $filter, '$skip' => $skip, '$top' => $limit];
-        if ($orderBy !== null) {
+        if ($orderBy !== null)
+        {
             $options['$orderby'] = $orderBy;
         }
 
@@ -56,6 +58,24 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
         return $this->makeArray($response->getBody());
     }
+
+    /**
+     * @throws \Exception on error.
+     */
+    public function findOneByID($id)
+    {
+
+        $response = $this->client->get('user/'.$id);
+        if ($response === null) {
+            throw new InternalException("Response failed");
+        }
+
+        $response->assertArray();
+        $response->assertStatusCodes(200);
+
+        return $this->makeArray($response->getBody());
+    }
+
 
     /**
      * @throws \Exception on error.
@@ -73,11 +93,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     /**
      * @throws \Exception on error.
-     * @uses   \Pisa\GizmoAPI\Repositories\UserRepository::findOneBy()
+     * @uses   \Pisa\GizmoAPI\Repositories\UserRepository::findOneByID()
      */
     public function get($id)
     {
-        return $this->findOneBy(['Id' => (int) $id]);
+        return $this->findOneByID((int) $id);
     }
 
     /**

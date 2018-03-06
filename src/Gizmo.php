@@ -25,7 +25,7 @@ class Gizmo
 
     /** @var array Resolved repositories */
     protected $repositories = [
-        'users'    => null,
+        'user'    => null,
         'hosts'    => null,
         'news'     => null,
         'sessions' => null,
@@ -142,7 +142,7 @@ class Gizmo
     {
         $repository = null;
         switch ($name) {
-            case 'users':
+            case 'user':
                 $repository = $this->ioc->make(UserRepositoryInterface::class);
                 break;
             case 'hosts':
