@@ -150,7 +150,7 @@ class GuzzleClientAdapter implements HttpClient
         $this->logger->log($logLevel, '[HTTP] Response: '
             . self::makeRequestString($method, $url, $parameters), array_merge([
                 'status' => $response->getStatusCode() . ' ' . $response->getReasonPhrase(),
-                'length' => $response->getHeader('Content-Length')[0],
+                'length' => $response->getHeader('Content-Length'),
             ], $context)
         );
     }

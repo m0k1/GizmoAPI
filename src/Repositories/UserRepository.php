@@ -73,7 +73,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $response->assertArray();
         $response->assertStatusCodes(200);
 
-        return $this->makeArray($response->getBody());
+        return $response->getBody();
     }
 
 
@@ -97,7 +97,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      */
     public function get($id)
     {
-        return $this->findOneByID((int) $id);
+        return $this->findOneByID($id);
     }
 
     /**
